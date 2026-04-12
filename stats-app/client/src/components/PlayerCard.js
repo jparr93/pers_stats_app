@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './PlayerCard.css';
 
@@ -6,11 +6,7 @@ function PlayerCard({ userScores, onGenerateCard, onReset }) {
   const [card, setCard] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    generateCard();
-  }, []);
-
-  const generateCard = async () => {
+  const generateCard = useCallback(async () => {
     setLoading(true);
     try {
       const userId = localStorage.getItem('userId');
@@ -29,7 +25,11 @@ function PlayerCard({ userScores, onGenerateCard, onReset }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [onGenerateCard]);
+
+  useEffect(() => {
+    generateCard();
+  }, [generateCard]);
 
   if (loading) {
     return (
