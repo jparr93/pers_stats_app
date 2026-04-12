@@ -98,6 +98,20 @@
   box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
 }
 
+.preview-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  gap: 30px;
+}
+
+.preview-card-container .fifa-card {
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .navbar-content {
     flex-direction: column;

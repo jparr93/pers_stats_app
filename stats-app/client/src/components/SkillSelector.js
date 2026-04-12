@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SkillSelector.css';
 
-function SkillSelector({ onSkillSelect }) {
+function SkillSelector({ onSkillSelect, onPreview }) {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -29,6 +29,11 @@ function SkillSelector({ onSkillSelect }) {
       <div className="skill-header">
         <h1>Select a Skill</h1>
         <p>Choose a skill to test and improve</p>
+        {onPreview && (
+          <button className="preview-btn" onClick={onPreview}>
+            👁️ Preview Card
+          </button>
+        )}
       </div>
 
       {error && <div className="skill-error">{error}</div>}

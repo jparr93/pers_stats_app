@@ -53,12 +53,12 @@ function PlayerCard({ userScores, onGenerateCard, onReset }) {
               </div>
               <div className="overall-rating">
                 <div className="rating-number">{card.overallRating}</div>
-                <div className="rating-label">Overall</div>
+                <div className="rating-label">OVR</div>
               </div>
             </div>
           </div>
 
-          <div className="card-divider"></div>
+          <div className="player-avatar">👤</div>
 
           <div className="card-skills-grid">
             <div className="skill-stat">
@@ -92,7 +92,7 @@ function PlayerCard({ userScores, onGenerateCard, onReset }) {
           </div>
 
           <div className="card-footer">
-            <small>Generated on {new Date(card.generatedAt).toLocaleDateString()}</small>
+            <small>Generated {new Date(card.generatedAt).toLocaleDateString()}</small>
           </div>
         </div>
 
