@@ -112,6 +112,9 @@
   text-transform: uppercase;
   font-weight: 700;
   margin-top: 1px;
+  letter-spacing: 0.5px;
+}
+
 .card-divider {
   height: 1px;
   background: rgba(255, 215, 0, 0.2);
