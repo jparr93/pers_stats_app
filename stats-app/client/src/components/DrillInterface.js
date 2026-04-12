@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './DrillInterface.css';
 
@@ -9,11 +9,7 @@ function DrillInterface({ skill, onComplete, onBack }) {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    fetchDrills();
-  }, [skill]);
-
-  const fetchDrills = async () => {
+  const fetchDrills = useCallback(async () => {
     try {
       const response = await axios.get(`/api/skills/${skill.id}`);
       setDrills(response.data.drills);
@@ -27,7 +23,11 @@ function DrillInterface({ skill, onComplete, onBack }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [skill.id]);
+
+  useEffect(() => {
+    fetchDrills();
+  }, [fetchDrills]);
 
   const handleScoreChange = (drillId, value) => {
     setScores({
