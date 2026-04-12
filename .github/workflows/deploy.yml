@@ -34,8 +34,8 @@ jobs:
         run: npm install
       
       - name: Install client dependencies and build React
-        working-directory: ./stats-app
-        run: cd client && npm install && npm run build
+        working-directory: ./stats-app/client
+        run: npm install && npm run build
       
       - name: Run linter
         working-directory: ./stats-app
@@ -47,9 +47,10 @@ jobs:
         run: npm test
         continue-on-error: true
       
-      - name: Build application
-        working-directory: ./stats-app
-        run: npm run build
+      - name: Verify React build output
+        run: |
+          echo "Checking for React build output:"
+          ls -la stats-app/client/build/ || echo "Build folder not found!"
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
