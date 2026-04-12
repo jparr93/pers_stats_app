@@ -1,0 +1,16 @@
+{
+  "lockFilePath": "/home/site/locks/iisnode.lock",
+  "nodeProcessCountPerProcessor": 1,
+  "maxPooledProcesses": 4,
+  "maxConcurrentRequestsPerProcess": 1024,
+  "asyncCompletionThreadCount": 0,
+  "maxRequestBufferSize": 67108864,
+  "uncFileChangesPollingInterval": 5000,
+  "gracefulShutdownTimeout": 60000,
+  "loggingEnabled": true,
+  "logDirectory": "iisnode",
+  "debuggingEnabled": false,
+  "debugHeaderFilter": "node-inspector",
+  "appendRawBuffer": false,
+  "watchedFiles": "*.js;iisnode.yml;web.config"
+}

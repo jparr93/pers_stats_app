@@ -1,0 +1,15 @@
+# Azure App Service Configuration
+# This file is used by Azure to configure the Node.js application
+
+# Specify Node version
+NODE_VERSION=24.x
+
+# NPM configuration
+npm_config_production=true
+NODE_ENV=production
+
+# Application port - Azure assigns this automatically
+PORT=8080
+
+# Disable npm audit (optional, speeds up deployment)
+npm_config_audit=false
