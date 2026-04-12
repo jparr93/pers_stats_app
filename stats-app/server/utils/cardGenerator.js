@@ -1,12 +1,12 @@
-function generatePlayerCard(playerName, skillScores) {
+function generatePlayerCard(playerName, skillScores, userPosition = null) {
   // Calculate overall rating
   const skillArray = Object.values(skillScores);
   const overallRating = Math.round(
     skillArray.reduce((sum, skill) => sum + skill.score, 0) / skillArray.length
   );
 
-  // Determine card position/role based on skills
-  let position = determinePosition(skillScores);
+  // Use user's selected position if provided, otherwise determine from skills
+  let position = userPosition || determinePosition(skillScores);
 
   const card = {
     playerName,
@@ -52,10 +52,11 @@ function determinePosition(skillScores) {
 }
 
 function determineRarity(overallRating) {
-  if (overallRating >= 90) return 'Gold';
-  if (overallRating >= 80) return 'Silver';
-  if (overallRating >= 70) return 'Bronze';
-  return 'Common';
+  if (overallRating >= 90) return 'Rare Gold';
+  if (overallRating >= 80) return 'Gold';
+  if (overallRating >= 70) return 'Rare Silver';
+  if (overallRating >= 60) return 'Silver';
+  return 'Bronze';
 }
 
 module.exports = {

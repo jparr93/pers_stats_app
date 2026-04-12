@@ -51,7 +51,7 @@ router.get('/user/:userId', (req, res) => {
 
 // Generate player card
 router.post('/generate-card', (req, res) => {
-  const { userId, playerName } = req.body;
+  const { userId, playerName, position } = req.body;
 
   if (!userId || !playerName) {
     return res.status(400).json({ error: 'userId and playerName required' });
@@ -68,7 +68,7 @@ router.post('/generate-card', (req, res) => {
     return res.status(400).json({ error: 'No skill scores recorded' });
   }
 
-  const card = generatePlayerCard(playerName, userSkillScores);
+  const card = generatePlayerCard(playerName, userSkillScores, position);
   
   res.json({
     success: true,

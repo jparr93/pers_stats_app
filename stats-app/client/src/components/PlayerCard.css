@@ -8,85 +8,21 @@
   gap: 30px;
 }
 
-.name-input-box {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 60px 40px;
-  width: 100%;
-  max-width: 500px;
+.loading-message {
   text-align: center;
-}
-
-.name-input-box h1 {
-  font-size: 2rem;
-  font-weight: 900;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.name-input-box p {
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 30px;
-  font-size: 1rem;
-}
-
-.name-input-box form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.name-input-box input {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 14px 16px;
-  font-size: 1rem;
-  color: #fff;
-  text-align: center;
-}
-
-.name-input-box input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.name-input-box button {
-  background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
-  color: #1a1a1a;
-  border: none;
-  border-radius: 8px;
-  padding: 14px;
-  font-size: 1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.name-input-box button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
-}
-
-.name-input-box button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  margin-top: 50px;
 }
 
 .fifa-card {
   background: linear-gradient(135deg, #2a1a1a 0%, #1a1a2a 100%);
   border: 3px solid rgba(255, 215, 0, 0.8);
   border-radius: 16px;
-  padding: 30px;
+  padding: 24px;
   width: 100%;
-  max-width: 400px;
-  aspect-ratio: 400 / 560;
+  max-width: 380px;
+  aspect-ratio: 380 / 540;
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
@@ -106,86 +42,80 @@
   pointer-events: none;
 }
 
-.card-header {
+.card-top {
   position: relative;
   z-index: 1;
-  text-align: center;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 20px;
+  gap: 15px;
+}
+
+.player-info {
+  text-align: left;
+  flex: 1;
 }
 
 .player-name {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 900;
   color: #fff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  margin-bottom: 5px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  line-height: 1.2;
 }
 
-.card-position {
+.player-position {
   background: rgba(255, 215, 0, 0.9);
   color: #1a1a1a;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
   font-weight: 700;
   display: inline-block;
-}
-
-.card-overall {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 1;
+  text-transform: uppercase;
 }
 
 .overall-rating {
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
   border: 2px solid rgba(255, 215, 0, 0.6);
   border-radius: 12px;
-  padding: 15px 25px;
+  padding: 12px 18px;
   text-align: center;
+  min-width: 70px;
 }
 
 .rating-number {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 900;
-  color: #fff;
+  color: rgba(255, 215, 0, 1);
+  line-height: 1;
 }
 
 .rating-label {
-  font-size: 0.75rem;
-  color: rgba(255, 215, 0, 0.8);
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-weight: 600;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
 }
 
-.card-rarity {
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
+.card-divider {
+  height: 2px;
+  background: rgba(255, 215, 0, 0.3);
+  margin: 12px 0;
   position: relative;
   z-index: 1;
 }
-
-.card-rarity[rarity='Gold'] {
-  color: #ffd700;
-}
-
-.card-rarity[rarity='Silver'] {
-  color: #c0c0c0;
-}
-
-.card-rarity[rarity='Bronze'] {
-  color: #cd7f32;
-}
-
-.card-rarity[rarity='Common'] {
-  color: #888;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
 }
 
 .card-skills-grid {
@@ -193,7 +123,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   flex: 1;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   position: relative;
   z-index: 1;
 }
@@ -207,24 +137,38 @@
 }
 
 .stat-label {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: rgba(255, 215, 0, 0.7);
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.5px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .stat-value {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: #fff;
+}
+
+.card-rarity {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+  color: #1a1a1a;
 }
 
 .card-footer {
   text-align: center;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   position: relative;
   z-index: 1;
 }

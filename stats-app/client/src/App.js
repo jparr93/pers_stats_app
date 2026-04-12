@@ -41,6 +41,8 @@ function App() {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
+    localStorage.removeItem('fullName');
+    localStorage.removeItem('position');
     setUser(null);
     setCurrentScreen('login');
     setCompletedSkills(new Set());

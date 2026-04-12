@@ -7,8 +7,15 @@ function LoginPage({ onLoginSuccess }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [position, setPosition] = useState('ST');
 
-  const handleSubmit = async (e) => {
+  const positions = [
+    'GK', 'CB', 'LB', 'RB', 'CM', 'CDM', 'CAM', 'LM', 'RM', 'LW', 'RW', 'ST', 'CF'
+  ];
+
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -22,6 +29,8 @@ function LoginPage({ onLoginSuccess }) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data.userId);
       localStorage.setItem('username', response.data.username);
+      localStorage.setItem('fullName', response.data.fullName);
+      localStorage.setItem('position', response.data.position);
 
       onLoginSuccess(response.data);
     } catch (err) {
@@ -31,13 +40,56 @@ function LoginPage({ onLoginSuccess }) {
     }
   };
 
+  const handleSignUpSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await axios.post('/api/auth/signup', {
+        username,
+        password,
+        fullName,
+        position
+      });
+
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data.userId);
+      localStorage.setItem('username', response.data.username);
+      localStorage.setItem('fullName', response.data.fullName);
+      localStorage.setItem('position', response.data.position);
+
+      onLoginSuccess(response.data);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Sign up failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
         <h1 className="login-title">FUT STATS</h1>
-        <p className="login-subtitle">Generate Your Player Card</p>
+        <p className="login-subtitle">
+          {isSignUp ? 'Create Your Account' : 'Generate Your Player Card'}
+        </p>
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={isSignUp ? handleSignUpSubmit : handleLoginSubmit} className="login-form">
+          {isSignUp && (
+            <div className="form-group">
+              <label htmlFor="fullName">Full Name</label>
+              <input
+                type="text"
+                id="fullName"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Enter your full name"
+                disabled={loading}
+              />
+            </div>
+          )}
+
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
@@ -45,7 +97,7 @@ function LoginPage({ onLoginSuccess }) {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
+              placeholder={isSignUp ? "Choose a username (min 3 chars)" : "Enter username"}
               disabled={loading}
             />
           </div>
@@ -57,23 +109,63 @@ function LoginPage({ onLoginSuccess }) {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
+              placeholder={isSignUp ? "Choose a password (min 6 chars)" : "Enter password"}
               disabled={loading}
             />
           </div>
 
+          {isSignUp && (
+            <div className="form-group">
+              <label htmlFor="position">Position</label>
+              <select
+                id="position"
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                disabled={loading}
+              >
+                {positions.map((pos) => (
+                  <option key={pos} value={pos}>
+                    {pos}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           {error && <div className="error-message">{error}</div>}
 
           <button type="submit" className="login-btn" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? (isSignUp ? 'Creating Account...' : 'Logging in...') : (isSignUp ? 'Sign Up' : 'Login')}
           </button>
         </form>
 
-        <div className="demo-credentials">
-          <p>Demo Credentials:</p>
-          <p>Username: <strong>admin</strong></p>
-          <p>Password: <strong>password123</strong></p>
+        <div className="toggle-mode">
+          <p>
+            {isSignUp ? "Already have an account? " : "Don't have an account? "}
+            <button 
+              type="button" 
+              onClick={() => {
+                setIsSignUp(!isSignUp);
+                setError('');
+                setUsername('');
+                setPassword('');
+                setFullName('');
+                setPosition('ST');
+              }} 
+              className="toggle-btn"
+            >
+              {isSignUp ? 'Login' : 'Sign Up'}
+            </button>
+          </p>
         </div>
+
+        {!isSignUp && (
+          <div className="demo-credentials">
+            <p>Demo Credentials:</p>
+            <p>Username: <strong>admin</strong></p>
+            <p>Password: <strong>password123</strong></p>
+          </div>
+        )}
       </div>
     </div>
   );
