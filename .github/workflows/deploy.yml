@@ -86,7 +86,7 @@ jobs:
       - name: Create deployment package
         run: |
           cd ./deploy-package
-          zip -r app.zip . -x "node_modules/*" "client/node_modules/*" ".git/*"
+          zip -r app.zip . -x "client/node_modules/*" ".git/*" "client/build/*"
           ls -lah app.zip
       
       - name: Deploy to Azure Web App
