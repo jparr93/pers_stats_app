@@ -181,6 +181,11 @@
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
   margin-top: 20px;
+}
+
+.demo-credentials p {
+  margin: 4px 0;
+}
 
 .demo-credentials strong {
   color: #fff;
