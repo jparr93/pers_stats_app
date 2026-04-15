@@ -67,6 +67,10 @@
   overflow: hidden;
 }
 
+.stats-card.full-width {
+  grid-column: 1 / -1;
+}
+
 .stats-card::before {
   content: '';
   position: absolute;

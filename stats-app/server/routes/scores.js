@@ -3,7 +3,8 @@ const router = express.Router();
 const { generatePlayerCard } = require('../utils/cardGenerator');
 
 // In-memory user data storage
-const userScores = new Map();
+const userScores = new Map(); // userId -> { skillId -> { score, drillScores, submittedAt } }
+const scoreHistory = new Map(); // userId -> [{ skillId, score, submittedAt }, ...]
 
 // Submit scores for a skill
 router.post('/submit', (req, res) => {
@@ -22,13 +23,25 @@ router.post('/submit', (req, res) => {
   if (!userScores.has(userId)) {
     userScores.set(userId, {});
   }
+  if (!scoreHistory.has(userId)) {
+    scoreHistory.set(userId, []);
+  }
 
   const userSkillScores = userScores.get(userId);
+  const timestamp = new Date();
+  
   userSkillScores[skillId] = {
     score: averageScore,
     drillScores,
-    submittedAt: new Date()
+    submittedAt: timestamp
   };
+  
+  // Add to history for trend analysis
+  scoreHistory.get(userId).push({
+    skillId,
+    score: averageScore,
+    submittedAt: timestamp
+  });
 
   res.json({
     success: true,
@@ -42,10 +55,12 @@ router.post('/submit', (req, res) => {
 router.get('/user/:userId', (req, res) => {
   const { userId } = req.params;
   const scores = userScores.get(userId) || {};
+  const history = scoreHistory.get(userId) || [];
   
   res.json({
     userId,
-    scores
+    scores,
+    scoreHistory: history.sort((a, b) => new Date(a.submittedAt) - new Date(b.submittedAt))
   });
 });
 
@@ -111,16 +126,16 @@ router.get('/user-stats/:userId', (req, res) => {
       : null
   };
 
-  // Generate comparison averages (simulated data)
+  // Generate comparison averages (simulated data for demo)
   const generateAverages = () => {
     const baseScore = 70;
     return {
-      shooting: baseScore + Math.floor(Math.random() * 10),
-      passing: baseScore + Math.floor(Math.random() * 10),
-      dribbling: baseScore + Math.floor(Math.random() * 10),
-      strength: baseScore + Math.floor(Math.random() * 10),
-      defending: baseScore + Math.floor(Math.random() * 10),
-      speed: baseScore + Math.floor(Math.random() * 10)
+      shooting: baseScore + Math.floor(Math.random() * 15),
+      passing: baseScore + Math.floor(Math.random() * 15),
+      dribbling: baseScore + Math.floor(Math.random() * 15),
+      strength: baseScore + Math.floor(Math.random() * 15),
+      defending: baseScore + Math.floor(Math.random() * 15),
+      speed: baseScore + Math.floor(Math.random() * 15)
     };
   };
 
@@ -131,9 +146,13 @@ router.get('/user-stats/:userId', (req, res) => {
     position: generateAverages()
   };
 
+  // Get user's score history for charts
+  const userHistory = scoreHistory.get(userId) || [];
+
   res.json({
     userStats,
-    averageStats
+    averageStats,
+    scoreHistory: userHistory.sort((a, b) => new Date(a.submittedAt) - new Date(b.submittedAt))
   });
 });
 

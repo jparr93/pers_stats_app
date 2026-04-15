@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ScoreTrendChart from './ScoreTrendChart';
 import './HomeScreen.css';
 
 function HomeScreen({ onNavigate }) {
   const [userStats, setUserStats] = useState(null);
   const [averageStats, setAverageStats] = useState(null);
+  const [scoreHistory, setScoreHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -27,6 +29,7 @@ function HomeScreen({ onNavigate }) {
 
       setUserStats(response.data.userStats);
       setAverageStats(response.data.averageStats);
+      setScoreHistory(response.data.scoreHistory || []);
     } catch (err) {
       setError('Failed to load statistics');
       console.error(err);
@@ -175,6 +178,11 @@ function HomeScreen({ onNavigate }) {
               )}
             </div>
           </div>
+        </div>
+
+        {/* Score Trend Charts */}
+        <div className="stats-card full-width">
+          <ScoreTrendChart scoreHistory={scoreHistory} />
         </div>
       </div>
     </div>
