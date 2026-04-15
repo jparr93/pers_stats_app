@@ -14,12 +14,13 @@ function DrillInterface({ skill, onComplete, onBack }) {
   const fetchDrills = useCallback(async () => {
     try {
       // Use tutorial drill data instead of API
+      const skillId = skill.id.toLowerCase();
       const allDrills = [];
       
       // Load all 5 drills for this skill from tutorial data
       let i = 0;
       while (true) {
-        const drill = getDrillBySkillAndType(skill.id, i);
+        const drill = getDrillBySkillAndType(skillId, i);
         if (!drill) break;
         allDrills.push({
           id: drill.id,
@@ -32,6 +33,11 @@ function DrillInterface({ skill, onComplete, onBack }) {
         i++;
       }
       
+      if (allDrills.length === 0) {
+        console.error('No drills found for skill:', skillId);
+        return;
+      }
+      
       setDrills(allDrills);
       const initialScores = {};
       allDrills.forEach(drill => {
@@ -39,7 +45,7 @@ function DrillInterface({ skill, onComplete, onBack }) {
       });
       setScores(initialScores);
     } catch (err) {
-      console.error('Failed to load drills');
+      console.error('Failed to load drills', err);
     }
   }, [skill.id]);
 
