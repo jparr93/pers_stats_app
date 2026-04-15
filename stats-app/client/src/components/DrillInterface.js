@@ -5,16 +5,32 @@ import { getDrillBySkillAndType } from '../data/drillData';
 import './DrillInterface.css';
 
 function DrillInterface({ skill, onComplete, onBack }) {
+  // Guard against undefined skill
+  if (!skill) {
+    return (
+      <div className="drill-error">
+        <button className="back-btn" onClick={onBack}>← Back</button>
+        <div className="error-content">
+          <h2>No Skill Selected</h2>
+          <p>Please select a skill to begin.</p>
+        </div>
+      </div>
+    );
+  }
+
   const [drills, setDrills] = useState([]);
   const [scores, setScores] = useState({});
   const [currentDrill, setCurrentDrill] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [showTutorial, setShowTutorial] = useState(true);
+  const [drillsLoaded, setDrillsLoaded] = useState(false);
+  const [loadError, setLoadError] = useState('');
 
   const fetchDrills = useCallback(async () => {
     try {
       // Use tutorial drill data instead of API
       const skillId = skill.id.toLowerCase();
+      console.log('Loading drills for skill:', skillId);
       const allDrills = [];
       
       // Load all 5 drills for this skill from tutorial data
@@ -33,19 +49,28 @@ function DrillInterface({ skill, onComplete, onBack }) {
         i++;
       }
       
+      console.log('Loaded drills:', allDrills);
+      
       if (allDrills.length === 0) {
-        console.error('No drills found for skill:', skillId);
+        const errorMsg = `No drills found for skill: ${skillId}`;
+        console.error(errorMsg);
+        setLoadError(errorMsg);
+        setDrillsLoaded(true);
         return;
       }
       
       setDrills(allDrills);
+      setLoadError('');
       const initialScores = {};
       allDrills.forEach(drill => {
         initialScores[drill.id] = 50;
       });
       setScores(initialScores);
+      setDrillsLoaded(true);
     } catch (err) {
-      console.error('Failed to load drills', err);
+      console.error('Failed to load drills:', err);
+      setLoadError(err.message);
+      setDrillsLoaded(true);
     }
   }, [skill.id]);
 
@@ -93,7 +118,41 @@ function DrillInterface({ skill, onComplete, onBack }) {
   };
 
   const drill = drills[currentDrill];
-  const progress = ((currentDrill + 1) / drills.length) * 100;
+  const progress = drills.length > 0 ? ((currentDrill + 1) / drills.length) * 100 : 0;
+
+  if (!drillsLoaded) {
+    return (
+      <div className="drill-loading">
+        <div className="loading-spinner"></div>
+        <p>Loading drills...</p>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="drill-error">
+        <button className="back-btn" onClick={onBack}>← Back</button>
+        <div className="error-content">
+          <h2>Error Loading Drills</h2>
+          <p>{loadError}</p>
+          <p>Check the browser console for more details.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (drills.length === 0) {
+    return (
+      <div className="drill-error">
+        <button className="back-btn" onClick={onBack}>← Back</button>
+        <div className="error-content">
+          <h2>No Drills Available</h2>
+          <p>Could not load drills for {skill.name}</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleTutorialClose = () => {
     setShowTutorial(false);
