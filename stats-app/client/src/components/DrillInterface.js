@@ -41,7 +41,7 @@ function DrillInterface({ skill, onComplete, onBack }) {
     } catch (err) {
       console.error('Failed to load drills');
     }
-  }, [skill.id, currentDrill]);
+  }, [skill.id]);
 
   useEffect(() => {
     fetchDrills();
