@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import LoginPage from './components/LoginPage';
+import HomeScreen from './components/HomeScreen';
 import SkillSelector from './components/SkillSelector';
 import DrillInterface from './components/DrillInterface';
 import PlayerCard from './components/PlayerCard';
@@ -14,7 +15,7 @@ function App() {
 
   const handleLoginSuccess = (userData) => {
     setUser(userData);
-    setCurrentScreen('skills');
+    setCurrentScreen('home');
   };
 
   const handleSkillSelect = (skill) => {
@@ -64,6 +65,9 @@ function App() {
     localStorage.removeItem('username');
     localStorage.removeItem('fullName');
     localStorage.removeItem('position');
+    localStorage.removeItem('age');
+    localStorage.removeItem('area');
+    localStorage.removeItem('team');
     setUser(null);
     setCurrentScreen('login');
     setCompletedSkills(new Set());
@@ -73,6 +77,21 @@ function App() {
     <div className="app">
       {currentScreen === 'login' && (
         <LoginPage onLoginSuccess={handleLoginSuccess} />
+      )}
+
+      {currentScreen === 'home' && user && (
+        <div className="home-view">
+          <div className="navbar">
+            <div className="navbar-content">
+              <h1 className="navbar-title">FUT STATS</h1>
+              <div className="user-info">
+                <span>Welcome, {localStorage.getItem('username')}</span>
+                <button className="logout-btn" onClick={handleLogout}>Logout</button>
+              </div>
+            </div>
+          </div>
+          <HomeScreen onNavigate={(screen) => setCurrentScreen(screen)} />
+        </div>
       )}
 
       {currentScreen === 'skills' && user && (
@@ -85,6 +104,11 @@ function App() {
                 <button className="logout-btn" onClick={handleLogout}>Logout</button>
               </div>
             </div>
+          </div>
+          <div className="back-home-btn-container">
+            <button className="back-home-btn" onClick={() => setCurrentScreen('home')}>
+              ← Back to Dashboard
+            </button>
           </div>
           <SkillSelector onSkillSelect={handleSkillSelect} onPreview={handlePreviewCard} />
           {completedSkills.size > 0 && (

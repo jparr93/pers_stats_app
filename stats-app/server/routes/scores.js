@@ -91,4 +91,50 @@ router.get('/card/:userId', (req, res) => {
   });
 });
 
+// Get user stats and comparison averages
+router.get('/user-stats/:userId', (req, res) => {
+  const { userId } = req.params;
+  const { position, age, area, team } = req.query;
+
+  const userSkillScores = userScores.get(userId) || {};
+  
+  // Calculate user's overall stats
+  const skillsArray = Object.values(userSkillScores);
+  const userStats = {
+    skills: userSkillScores,
+    skillsCompleted: skillsArray.length,
+    overallRating: skillsArray.length > 0 
+      ? Math.round(skillsArray.reduce((sum, s) => sum + s.score, 0) / skillsArray.length)
+      : null,
+    averageScore: skillsArray.length > 0
+      ? Math.round(skillsArray.reduce((sum, s) => sum + s.score, 0) / skillsArray.length)
+      : null
+  };
+
+  // Generate comparison averages (simulated data)
+  const generateAverages = () => {
+    const baseScore = 70;
+    return {
+      shooting: baseScore + Math.floor(Math.random() * 10),
+      passing: baseScore + Math.floor(Math.random() * 10),
+      dribbling: baseScore + Math.floor(Math.random() * 10),
+      strength: baseScore + Math.floor(Math.random() * 10),
+      defending: baseScore + Math.floor(Math.random() * 10),
+      speed: baseScore + Math.floor(Math.random() * 10)
+    };
+  };
+
+  const averageStats = {
+    ageGroup: generateAverages(),
+    area: generateAverages(),
+    team: generateAverages(),
+    position: generateAverages()
+  };
+
+  res.json({
+    userStats,
+    averageStats
+  });
+});
+
 module.exports = router;

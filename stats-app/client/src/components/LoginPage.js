@@ -10,6 +10,9 @@ function LoginPage({ onLoginSuccess }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [fullName, setFullName] = useState('');
   const [position, setPosition] = useState('ST');
+  const [age, setAge] = useState('');
+  const [area, setArea] = useState('');
+  const [team, setTeam] = useState('');
 
   const positions = [
     'GK', 'CB', 'LB', 'RB', 'CM', 'CDM', 'CAM', 'LM', 'RM', 'LW', 'RW', 'ST', 'CF'
@@ -31,6 +34,9 @@ function LoginPage({ onLoginSuccess }) {
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('fullName', response.data.fullName);
       localStorage.setItem('position', response.data.position);
+      localStorage.setItem('age', response.data.age);
+      localStorage.setItem('area', response.data.area);
+      localStorage.setItem('team', response.data.team);
 
       onLoginSuccess(response.data);
     } catch (err) {
@@ -50,7 +56,10 @@ function LoginPage({ onLoginSuccess }) {
         username,
         password,
         fullName,
-        position
+        position,
+        age: parseInt(age),
+        area,
+        team
       });
 
       localStorage.setItem('token', response.data.token);
@@ -58,6 +67,9 @@ function LoginPage({ onLoginSuccess }) {
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('fullName', response.data.fullName);
       localStorage.setItem('position', response.data.position);
+      localStorage.setItem('age', response.data.age);
+      localStorage.setItem('area', response.data.area);
+      localStorage.setItem('team', response.data.team);
 
       onLoginSuccess(response.data);
     } catch (err) {
@@ -115,21 +127,61 @@ function LoginPage({ onLoginSuccess }) {
           </div>
 
           {isSignUp && (
-            <div className="form-group">
-              <label htmlFor="position">Position</label>
-              <select
-                id="position"
-                value={position}
-                onChange={(e) => setPosition(e.target.value)}
-                disabled={loading}
-              >
-                {positions.map((pos) => (
-                  <option key={pos} value={pos}>
-                    {pos}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <>
+              <div className="form-group">
+                <label htmlFor="position">Position</label>
+                <select
+                  id="position"
+                  value={position}
+                  onChange={(e) => setPosition(e.target.value)}
+                  disabled={loading}
+                >
+                  {positions.map((pos) => (
+                    <option key={pos} value={pos}>
+                      {pos}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="age">Age</label>
+                <input
+                  type="number"
+                  id="age"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  placeholder="Enter your age"
+                  disabled={loading}
+                  min="13"
+                  max="100"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="area">Area/Region</label>
+                <input
+                  type="text"
+                  id="area"
+                  value={area}
+                  onChange={(e) => setArea(e.target.value)}
+                  placeholder="City or region (e.g., London, California)"
+                  disabled={loading}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="team">Team</label>
+                <input
+                  type="text"
+                  id="team"
+                  value={team}
+                  onChange={(e) => setTeam(e.target.value)}
+                  placeholder="Your team name"
+                  disabled={loading}
+                />
+              </div>
+            </>
           )}
 
           {error && <div className="error-message">{error}</div>}

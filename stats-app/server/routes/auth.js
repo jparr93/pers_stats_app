@@ -13,13 +13,16 @@ users.set('admin', {
   password: 'password123',
   fullName: 'Demo Admin',
   position: 'CM',
+  age: 25,
+  area: 'London',
+  team: 'Demo United',
   createdAt: new Date()
 });
 
 router.post('/signup', (req, res) => {
-  const { username, password, fullName, position } = req.body;
+  const { username, password, fullName, position, age, area, team } = req.body;
 
-  if (!username || !password || !fullName || !position) {
+  if (!username || !password || !fullName || !position || !age || !area || !team) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
@@ -44,6 +47,9 @@ router.post('/signup', (req, res) => {
     password,
     fullName,
     position,
+    age,
+    area,
+    team,
     createdAt: new Date()
   });
 
@@ -52,6 +58,9 @@ router.post('/signup', (req, res) => {
     username,
     fullName,
     position,
+    age,
+    area,
+    team,
     createdAt: new Date()
   });
 
@@ -61,7 +70,10 @@ router.post('/signup', (req, res) => {
     userId,
     username,
     fullName,
-    position
+    position,
+    age,
+    area,
+    team
   });
 });
 
@@ -85,6 +97,9 @@ router.post('/login', (req, res) => {
     username: user.username,
     fullName: user.fullName,
     position: user.position,
+    age: user.age,
+    area: user.area,
+    team: user.team,
     createdAt: new Date()
   });
 
@@ -94,7 +109,10 @@ router.post('/login', (req, res) => {
     userId: user.userId,
     username: user.username,
     fullName: user.fullName,
-    position: user.position
+    position: user.position,
+    age: user.age,
+    area: user.area,
+    team: user.team
   });
 });
 
