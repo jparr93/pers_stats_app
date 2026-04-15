@@ -5,19 +5,6 @@ import { getDrillBySkillAndType } from '../data/drillData';
 import './DrillInterface.css';
 
 function DrillInterface({ skill, onComplete, onBack }) {
-  // Guard against undefined skill
-  if (!skill) {
-    return (
-      <div className="drill-error">
-        <button className="back-btn" onClick={onBack}>← Back</button>
-        <div className="error-content">
-          <h2>No Skill Selected</h2>
-          <p>Please select a skill to begin.</p>
-        </div>
-      </div>
-    );
-  }
-
   const [drills, setDrills] = useState([]);
   const [scores, setScores] = useState({});
   const [currentDrill, setCurrentDrill] = useState(0);
@@ -77,6 +64,19 @@ function DrillInterface({ skill, onComplete, onBack }) {
   useEffect(() => {
     fetchDrills();
   }, [fetchDrills]);
+
+  // Guard against undefined skill - AFTER all hooks
+  if (!skill) {
+    return (
+      <div className="drill-error">
+        <button className="back-btn" onClick={onBack}>← Back</button>
+        <div className="error-content">
+          <h2>No Skill Selected</h2>
+          <p>Please select a skill to begin.</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleScoreChange = (drillId, value) => {
     setScores({
