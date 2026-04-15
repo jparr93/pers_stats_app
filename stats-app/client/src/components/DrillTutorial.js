@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import DrillAnimation from './DrillAnimation';
-import { getDrillBySkillAndType } from '../data/drillData';
 import './DrillTutorial.css';
 
 const DrillTutorial = ({ skillId, drillIndex, drill, onClose }) => {

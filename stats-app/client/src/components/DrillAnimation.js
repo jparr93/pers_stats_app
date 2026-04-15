@@ -2,7 +2,7 @@ import React from 'react';
 import './DrillAnimation.css';
 
 const DrillAnimation = ({ animationType }) => {
-  // Soccer player SVG components for different animations
+  // Soccer player SVG component for animations
   const SoccerPlayer = ({ x, y, rotation = 0, scale = 1 }) => (
     <g transform={`translate(${x}, ${y}) scale(${scale}) rotate(${rotation})`}>
       {/* Head */}
@@ -22,12 +22,6 @@ const DrillAnimation = ({ animationType }) => {
       {/* Right Foot */}
       <circle cx="5" cy="16" r="2" fill="#000" />
     </g>
-  );
-
-  const Ball = ({ x, y }) => (
-    <circle cx={x} cy={y} r="4" fill="#fff" stroke="#333" strokeWidth="0.5">
-      <animate attributeName="cx" from={x} to={x} dur="0.1s" />
-    </circle>
   );
 
   // Animation renderers based on type

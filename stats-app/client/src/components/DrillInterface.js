@@ -8,14 +8,12 @@ function DrillInterface({ skill, onComplete, onBack }) {
   const [drills, setDrills] = useState([]);
   const [scores, setScores] = useState({});
   const [currentDrill, setCurrentDrill] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [showTutorial, setShowTutorial] = useState(true);
 
   const fetchDrills = useCallback(async () => {
     try {
       // Use tutorial drill data instead of API
-      const tutorialDrills = getDrillBySkillAndType(skill.id, currentDrill);
       const allDrills = [];
       
       // Load all 5 drills for this skill from tutorial data
@@ -42,8 +40,6 @@ function DrillInterface({ skill, onComplete, onBack }) {
       setScores(initialScores);
     } catch (err) {
       console.error('Failed to load drills');
-    } finally {
-      setLoading(false);
     }
   }, [skill.id, currentDrill]);
 
