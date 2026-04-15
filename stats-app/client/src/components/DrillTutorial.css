@@ -1,0 +1,299 @@
+.drill-tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.tutorial-modal {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 16px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tutorial-header {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tutorial-header h2 {
+  margin: 0;
+  color: rgba(255, 215, 0, 0.9);
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+.animation-section {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tutorial-content {
+  padding: 20px;
+}
+
+.description-section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.drill-main-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.collapsible-section {
+  margin-bottom: 15px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.3s ease;
+}
+
+.collapsible-section:hover {
+  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.section-header {
+  width: 100%;
+  background: rgba(255, 215, 0, 0.08);
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 215, 0, 0.8);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.section-header:hover {
+  background: rgba(255, 215, 0, 0.15);
+  color: rgba(255, 215, 0, 1);
+}
+
+.section-header.active {
+  background: rgba(255, 215, 0, 0.15);
+  color: rgba(255, 215, 0, 1);
+}
+
+.section-icon {
+  font-size: 1.2rem;
+}
+
+.section-title {
+  flex: 1;
+  text-align: left;
+}
+
+.expand-icon {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.section-content {
+  padding: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  animation: expandDown 0.2s ease;
+}
+
+@keyframes expandDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+.tips-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tips-list li {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid rgba(255, 215, 0, 0.4);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.tips-list li:last-child {
+  margin-bottom: 0;
+}
+
+.tips-list li:hover {
+  background: rgba(255, 215, 0, 0.1);
+  border-left-color: rgba(255, 215, 0, 0.8);
+}
+
+.tip-number {
+  color: rgba(255, 215, 0, 0.8);
+  font-weight: bold;
+  min-width: 25px;
+}
+
+.tutorial-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.toggle-animation-btn,
+.start-drill-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.toggle-animation-btn {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  color: rgba(255, 215, 0, 0.8);
+}
+
+.toggle-animation-btn:hover {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.6);
+  color: rgba(255, 215, 0, 1);
+}
+
+.start-drill-btn {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0.15) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  color: rgba(255, 215, 0, 0.95);
+}
+
+.start-drill-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.4) 0%, rgba(255, 215, 0, 0.25) 100%);
+  border-color: rgba(255, 215, 0, 0.8);
+  color: rgba(255, 215, 0, 1);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .drill-tutorial-overlay {
+    padding: 10px;
+  }
+
+  .tutorial-modal {
+    max-height: 95vh;
+    border-radius: 12px;
+  }
+
+  .tutorial-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .animation-section {
+    padding: 15px;
+  }
+
+  .tutorial-content {
+    padding: 15px;
+  }
+
+  .tutorial-footer {
+    flex-direction: column;
+  }
+
+  .toggle-animation-btn,
+  .start-drill-btn {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Scrollbar Styling */
+.tutorial-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tutorial-modal::-webkit-scrollbar-track {
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.tutorial-modal::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.3);
+  border-radius: 3px;
+}
+
+.tutorial-modal::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.5);
+}

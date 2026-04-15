@@ -1,0 +1,17 @@
+.drill-animation-container {
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(135deg, #1a5f1f 0%, #2d7f3f 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.drill-animation-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
