@@ -7,6 +7,7 @@
   padding: 40px 20px;
   gap: 30px;
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 .loading-message {
@@ -79,7 +80,6 @@
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6),
               0 0 60px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -89,14 +89,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: 0.1;
+  opacity: 0.03;
   background-image: 
     repeating-linear-gradient(
       45deg,
       transparent,
       transparent 10px,
-      rgba(255, 255, 255, 0.1) 10px,
-      rgba(255, 255, 255, 0.1) 20px
+      rgba(255, 255, 255, 0.08) 10px,
+      rgba(255, 255, 255, 0.08) 20px
     );
   pointer-events: none;
 }
@@ -128,7 +128,7 @@
   color: #fff;
   margin: 0;
   line-height: 1.1;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .player-meta {
@@ -282,11 +282,12 @@
   justify-content: center;
   width: 100%;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .action-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   color: #fff;
   padding: 12px 30px;
   border-radius: 8px;
@@ -296,45 +297,47 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .download-btn {
-  background: rgba(50, 150, 250, 0.2);
-  border-color: rgba(50, 150, 250, 0.4);
+  background: rgba(50, 150, 250, 0.3);
+  border-color: rgba(50, 150, 250, 0.6);
 }
 
 .download-btn:hover {
-  background: rgba(50, 150, 250, 0.3);
-  border-color: rgba(50, 150, 250, 0.6);
-  box-shadow: 0 0 20px rgba(50, 150, 250, 0.3);
+  background: rgba(50, 150, 250, 0.5);
+  border-color: rgba(50, 150, 250, 0.8);
+  box-shadow: 0 8px 30px rgba(50, 150, 250, 0.4);
 }
 
 .share-btn {
-  background: rgba(100, 200, 100, 0.2);
-  border-color: rgba(100, 200, 100, 0.4);
+  background: rgba(100, 200, 100, 0.3);
+  border-color: rgba(100, 200, 100, 0.6);
 }
 
 .share-btn:hover {
-  background: rgba(100, 200, 100, 0.3);
-  border-color: rgba(100, 200, 100, 0.6);
-  box-shadow: 0 0 20px rgba(100, 200, 100, 0.3);
+  background: rgba(100, 200, 100, 0.5);
+  border-color: rgba(100, 200, 100, 0.8);
+  box-shadow: 0 8px 30px rgba(100, 200, 100, 0.4);
 }
 
 .reset-btn {
-  background: rgba(255, 215, 0, 0.15);
-  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.25);
+  border-color: rgba(255, 215, 0, 0.5);
 }
 
 .reset-btn:hover {
-  background: rgba(255, 215, 0, 0.25);
-  border-color: rgba(255, 215, 0, 0.6);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  background: rgba(255, 215, 0, 0.35);
+  border-color: rgba(255, 215, 0, 0.7);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
 }
 
 @media (max-width: 480px) {
