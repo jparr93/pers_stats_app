@@ -229,16 +229,4 @@ function PlayerCard({ userScores, onGenerateCard, onReset }) {
   return null;
 }
 
-function getRarityColor(rarity) {
-  const rarityMap = {
-    'Bronze': '#cd7f32',
-    'Silver': '#c0c0c0',
-    'Gold': '#ffd700',
-    'Rare Gold': '#ff8c00',
-    'Rare Silver': '#b0c4de',
-    'Rare Bronze': '#d4a574'
-  };
-  return rarityMap[rarity] || '#ffd700';
-}
-
 export default PlayerCard;
