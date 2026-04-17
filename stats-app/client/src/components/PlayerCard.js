@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
+import html2canvas from 'html2canvas';
 import './PlayerCard.css';
 
 function PlayerCard({ userScores, onGenerateCard, onReset }) {
+  const cardRef = useRef(null);
   const [card, setCard] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -31,6 +33,42 @@ function PlayerCard({ userScores, onGenerateCard, onReset }) {
     generateCard();
   }, [generateCard]);
 
+  const downloadCard = useCallback(async () => {
+    if (!cardRef.current) return;
+    
+    try {
+      const canvas = await html2canvas(cardRef.current, {
+        backgroundColor: null,
+        scale: 2
+      });
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = `${card.playerName}-FUT-Card.png`;
+      link.click();
+    } catch (err) {
+      console.error('Failed to download card:', err);
+      alert('Could not download card. Please try again.');
+    }
+  }, [card]);
+
+  const shareCard = useCallback(() => {
+    const text = `Check out my FUT Card! ${card.playerName} - ${card.position} rated ${card.overallRating}!`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: 'My FUT Card',
+        text: text
+      }).catch(err => console.log('Share cancelled'));
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Card info copied to clipboard!');
+      }).catch(() => {
+        alert('Share failed. Please try again.');
+      });
+    }
+  }, [card]);
+
   if (loading) {
     return (
       <div className="player-card-container">
@@ -44,7 +82,7 @@ function PlayerCard({ userScores, onGenerateCard, onReset }) {
   if (card) {
     return (
       <div className="player-card-container">
-        <div className="fifa-card">
+        <div className="fifa-card" ref={cardRef}>
           <div className="card-top">
             <div className="card-header">
               <div className="player-info">
@@ -97,8 +135,14 @@ function PlayerCard({ userScores, onGenerateCard, onReset }) {
         </div>
 
         <div className="card-actions">
-          <button className="reset-btn" onClick={onReset}>
-            Test Another Skill
+          <button className="action-btn download-btn" onClick={downloadCard}>
+            📥 Download
+          </button>
+          <button className="action-btn share-btn" onClick={shareCard}>
+            📤 Share
+          </button>
+          <button className="action-btn reset-btn" onClick={onReset}>
+            🔄 Test Another Skill
           </button>
         </div>
       </div>
