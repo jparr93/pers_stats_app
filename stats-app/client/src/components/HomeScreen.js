@@ -3,15 +3,40 @@ import axios from 'axios';
 import ScoreTrendChart from './ScoreTrendChart';
 import './HomeScreen.css';
 
+// Generate fake teammates data
+const generateFakeTeammates = () => {
+  const firstNames = ['Alex', 'Jordan', 'Casey', 'Morgan', 'Taylor', 'Riley', 'Cameron', 'Dakota'];
+  const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis'];
+  const positions = ['ST', 'CF', 'LW', 'RW', 'CAM', 'CM', 'CDM', 'LB', 'RB', 'CB'];
+
+  return Array.from({ length: 10 }, () => {
+    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+    return {
+      name: `${firstName} ${lastName}`,
+      position: positions[Math.floor(Math.random() * positions.length)],
+      overall: Math.floor(Math.random() * 30) + 65,
+      shooting: Math.floor(Math.random() * 30) + 60,
+      passing: Math.floor(Math.random() * 30) + 60,
+      dribbling: Math.floor(Math.random() * 30) + 60,
+      defending: Math.floor(Math.random() * 30) + 60,
+      speed: Math.floor(Math.random() * 30) + 60,
+      strength: Math.floor(Math.random() * 30) + 60
+    };
+  }).sort((a, b) => b.overall - a.overall);
+};
+
 function HomeScreen({ onNavigate }) {
   const [userStats, setUserStats] = useState(null);
   const [averageStats, setAverageStats] = useState(null);
   const [scoreHistory, setScoreHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [teammates, setTeammates] = useState([]);
 
   useEffect(() => {
     fetchUserStats();
+    setTeammates(generateFakeTeammates());
   }, []);
 
   const fetchUserStats = async () => {
@@ -183,6 +208,60 @@ function HomeScreen({ onNavigate }) {
         {/* Score Trend Charts */}
         <div className="stats-card full-width">
           <ScoreTrendChart scoreHistory={scoreHistory} />
+        </div>
+
+        {/* Teammates Comparison Table */}
+        <div className="stats-card full-width teammates-card">
+          <h2>Your Skills vs Teammates</h2>
+          <div className="teammates-table-container">
+            <table className="teammates-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player</th>
+                  <th>Position</th>
+                  <th>Overall</th>
+                  <th>SHO</th>
+                  <th>PAS</th>
+                  <th>DRI</th>
+                  <th>DEF</th>
+                  <th>PAC</th>
+                  <th>PHY</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Current User Row */}
+                <tr className="user-row">
+                  <td>👑</td>
+                  <td className="player-name">{localStorage.getItem('fullName')}</td>
+                  <td>{localStorage.getItem('position')}</td>
+                  <td className="overall-cell">{userStats?.overallRating || '--'}</td>
+                  <td className="skill-cell">{userStats?.skills?.shooting?.score || '--'}</td>
+                  <td className="skill-cell">{userStats?.skills?.passing?.score || '--'}</td>
+                  <td className="skill-cell">{userStats?.skills?.dribbling?.score || '--'}</td>
+                  <td className="skill-cell">{userStats?.skills?.defending?.score || '--'}</td>
+                  <td className="skill-cell">{userStats?.skills?.speed?.score || '--'}</td>
+                  <td className="skill-cell">{userStats?.skills?.strength?.score || '--'}</td>
+                </tr>
+
+                {/* Teammates Rows */}
+                {teammates.map((teammate, index) => (
+                  <tr key={index} className={index < 3 ? 'top-player' : ''}>
+                    <td className="rank">#{index + 1}</td>
+                    <td className="player-name">{teammate.name}</td>
+                    <td>{teammate.position}</td>
+                    <td className="overall-cell">{teammate.overall}</td>
+                    <td className="skill-cell">{teammate.shooting}</td>
+                    <td className="skill-cell">{teammate.passing}</td>
+                    <td className="skill-cell">{teammate.dribbling}</td>
+                    <td className="skill-cell">{teammate.defending}</td>
+                    <td className="skill-cell">{teammate.speed}</td>
+                    <td className="skill-cell">{teammate.strength}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

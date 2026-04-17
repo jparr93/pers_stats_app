@@ -244,3 +244,110 @@
     grid-column: span 1;
   }
 }
+
+/* Teammates Comparison Table */
+.teammates-card {
+  margin-top: 40px;
+}
+
+.teammates-table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.teammates-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.teammates-table thead {
+  background: rgba(255, 215, 0, 0.15);
+  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.teammates-table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 700;
+  color: rgba(255, 215, 0, 0.95);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+.teammates-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.teammates-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.teammates-table tbody tr:hover {
+  background: rgba(255, 215, 0, 0.08);
+}
+
+.user-row {
+  background: rgba(255, 215, 0, 0.12) !important;
+  font-weight: 700;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.user-row:hover {
+  background: rgba(255, 215, 0, 0.18) !important;
+}
+
+.top-player {
+  background: rgba(255, 215, 0, 0.06);
+}
+
+.top-player:hover {
+  background: rgba(255, 215, 0, 0.12);
+}
+
+.rank {
+  font-weight: 700;
+  color: rgba(255, 215, 0, 0.9);
+  text-align: center;
+  width: 60px;
+}
+
+.player-name {
+  font-weight: 600;
+  color: #fff;
+  min-width: 150px;
+}
+
+.overall-cell {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: rgba(255, 215, 0, 0.95);
+  text-align: center;
+  min-width: 70px;
+}
+
+.skill-cell {
+  text-align: center;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  min-width: 50px;
+}
+
+@media (max-width: 768px) {
+  .teammates-table {
+    font-size: 0.9rem;
+  }
+
+  .teammates-table th,
+  .teammates-table td {
+    padding: 10px 8px;
+  }
+
+  .player-name {
+    min-width: 100px;
+  }
+}

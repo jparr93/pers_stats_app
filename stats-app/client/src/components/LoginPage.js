@@ -13,10 +13,24 @@ function LoginPage({ onLoginSuccess }) {
   const [age, setAge] = useState('');
   const [area, setArea] = useState('');
   const [team, setTeam] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const positions = [
     'GK', 'CB', 'LB', 'RB', 'CM', 'CDM', 'CAM', 'LM', 'RM', 'LW', 'RW', 'ST', 'CF'
   ];
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result); // base64 encoded image
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -59,7 +73,8 @@ function LoginPage({ onLoginSuccess }) {
         position,
         age: parseInt(age),
         area,
-        team
+        team,
+        profileImage
       });
 
       localStorage.setItem('token', response.data.token);
@@ -70,6 +85,9 @@ function LoginPage({ onLoginSuccess }) {
       localStorage.setItem('age', response.data.age);
       localStorage.setItem('area', response.data.area);
       localStorage.setItem('team', response.data.team);
+      if (profileImage) {
+        localStorage.setItem('profileImage', profileImage);
+      }
 
       onLoginSuccess(response.data);
     } catch (err) {
@@ -128,6 +146,26 @@ function LoginPage({ onLoginSuccess }) {
 
           {isSignUp && (
             <>
+              <div className="form-group image-upload-group">
+                <label>Profile Picture</label>
+                <div className="image-upload-wrapper">
+                  {imagePreview && (
+                    <img src={imagePreview} alt="Profile preview" className="image-preview" />
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={loading}
+                    id="profileImage"
+                    className="image-input"
+                  />
+                  <label htmlFor="profileImage" className="image-upload-label">
+                    {imagePreview ? '📷 Change Photo' : '📷 Choose Photo'}
+                  </label>
+                </div>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="position">Position</label>
                 <select
