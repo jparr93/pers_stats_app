@@ -2,9 +2,16 @@ const express = require('express');
 const router = express.Router();
 const { generatePlayerCard } = require('../utils/cardGenerator');
 
-// In-memory user data storage
-const userScores = new Map(); // userId -> { skillId -> { score, drillScores, submittedAt } }
-const scoreHistory = new Map(); // userId -> [{ skillId, score, submittedAt }, ...]
+// Use shared data structures from app.locals
+let userScores;
+let scoreHistory;
+
+// Initialize data structures from app.locals
+router.use((req, res, next) => {
+  userScores = req.app.locals.userScores;
+  scoreHistory = req.app.locals.scoreHistory;
+  next();
+});
 
 // Submit scores for a skill
 router.post('/submit', (req, res) => {

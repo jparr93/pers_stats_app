@@ -50,7 +50,7 @@ function DrillInterface({ skill, onComplete, onBack }) {
       setLoadError('');
       const initialScores = {};
       allDrills.forEach(drill => {
-        initialScores[drill.id] = 50;
+        initialScores[drill.id] = 0;
       });
       setScores(initialScores);
       setDrillsLoaded(true);
@@ -103,15 +103,17 @@ function DrillInterface({ skill, onComplete, onBack }) {
       const userId = localStorage.getItem('userId');
       const drillScores = drills.map(drill => scores[drill.id]);
 
-      await axios.post('/api/scores/submit', {
+      // Call skill-specific API endpoint to calculate average
+      const skillIdLower = skill.id.toLowerCase();
+      const response = await axios.post(`/api/skills/${skillIdLower}/calculate-score`, {
         userId,
-        skillId: skill.id,
         drillScores
       });
 
       onComplete(skill.id);
     } catch (err) {
-      console.error('Failed to submit scores');
+      console.error('Failed to submit scores:', err);
+      alert('Failed to submit scores. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -203,23 +205,23 @@ function DrillInterface({ skill, onComplete, onBack }) {
             </div>
 
             <div className="score-input-container">
-              <label htmlFor="score">Your Score (0-100)</label>
+              <label htmlFor="score">Your Score (0-13)</label>
               <div className="score-input-group">
               <input
                 type="range"
                 id="score"
                 min="0"
-                max="100"
+                max="13"
                 value={scores[drill.id]}
                 onChange={(e) => handleScoreChange(drill.id, e.target.value)}
                 className="score-slider"
               />
-              <div className="score-display">{scores[drill.id]}</div>
+              <div className="score-display">{scores[drill.id]}/13</div>
             </div>
             <div className="score-labels">
               <span>Poor</span>
-              <span>Good</span>
-              <span>Excellent</span>
+              <span>Average</span>
+              <span>Perfect</span>
             </div>
           </div>
         </div>

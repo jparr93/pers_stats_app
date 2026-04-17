@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
+// In-memory data storage (shared across routes)
+const userScores = new Map(); // userId -> { skillId -> { score, drillScores, submittedAt } }
+const scoreHistory = new Map(); // userId -> [{ skillId, score, submittedAt }, ...]
+
 const authRoutes = require('./routes/auth');
 const skillsRoutes = require('./routes/skills');
 const scoreRoutes = require('./routes/scores');
@@ -16,6 +20,10 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Share data structures with routes
+app.locals.userScores = userScores;
+app.locals.scoreHistory = scoreHistory;
 
 // Request logging for debugging
 app.use((req, res, next) => {

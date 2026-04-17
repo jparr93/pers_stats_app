@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
+// Use shared data structures from app.locals
+let userScores;
+let scoreHistory;
+
+// Initialize data structures from app.locals
+router.use((req, res, next) => {
+  userScores = req.app.locals.userScores;
+  scoreHistory = req.app.locals.scoreHistory;
+  next();
+});
+
 // Skills with 5 drills each
 const skills = {
   shooting: {
@@ -97,6 +108,64 @@ router.get('/:skillId', (req, res) => {
   }
 
   res.json(skill);
+});
+
+// Calculate average score for a skill (0-13 scale to 0-100 scale)
+// POST /api/skills/shooting/calculate-score
+router.post('/:skillId/calculate-score', (req, res) => {
+  const { skillId } = req.params;
+  const { userId, drillScores } = req.body;
+
+  if (!userId || !Array.isArray(drillScores) || drillScores.length !== 5) {
+    return res.status(400).json({ error: 'Invalid request - need userId and array of 5 drill scores' });
+  }
+
+  // Validate each score is between 0-13
+  const validScores = drillScores.every(score => {
+    const num = parseInt(score);
+    return !isNaN(num) && num >= 0 && num <= 13;
+  });
+
+  if (!validScores) {
+    return res.status(400).json({ error: 'All scores must be between 0 and 13' });
+  }
+
+  // Convert 0-13 scale to 0-100 scale
+  // Formula: (sum of scores / (5 * 13)) * 100
+  const totalScore = drillScores.reduce((sum, score) => sum + parseInt(score), 0);
+  const averageScore = Math.round((totalScore / (5 * 13)) * 100);
+
+  // Store the score
+  if (!userScores.has(userId)) {
+    userScores.set(userId, {});
+  }
+  if (!scoreHistory.has(userId)) {
+    scoreHistory.set(userId, []);
+  }
+
+  const userSkillScores = userScores.get(userId);
+  const timestamp = new Date();
+  
+  userSkillScores[skillId] = {
+    score: averageScore,
+    drillScores,
+    submittedAt: timestamp
+  };
+  
+  // Add to history for trend analysis
+  scoreHistory.get(userId).push({
+    skillId,
+    score: averageScore,
+    submittedAt: timestamp
+  });
+
+  res.json({
+    success: true,
+    skillId,
+    drillScores,
+    averageScore,
+    message: `${skillId} average score: ${averageScore} out of 100`
+  });
 });
 
 module.exports = router;
