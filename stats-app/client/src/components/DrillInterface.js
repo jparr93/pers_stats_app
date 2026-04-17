@@ -105,7 +105,7 @@ function DrillInterface({ skill, onComplete, onBack }) {
 
       // Call skill-specific API endpoint to calculate average
       const skillIdLower = skill.id.toLowerCase();
-      const response = await axios.post(`/api/skills/${skillIdLower}/calculate-score`, {
+      await axios.post(`/api/skills/${skillIdLower}/calculate-score`, {
         userId,
         drillScores
       });
